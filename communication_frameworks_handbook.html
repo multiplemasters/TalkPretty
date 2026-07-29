@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Communication Frameworks — an interactive handbook for leadership, feedback, storytelling, persuasion, strategy, and organization.">
+<title>Communication Frameworks — Interactive Handbook</title>
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#fff; --surface-2:#eef1f5; --text:#17202a;
+  --muted:#657080; --line:#dfe3e8; --accent:#1769e0; --accent-2:#0b4ca3;
+  --shadow:0 8px 28px rgba(23,32,42,.08); --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input{font:inherit}
+button{cursor:pointer}
+.site-header{
+  background:linear-gradient(135deg,#101820 0%,#243447 100%);color:#fff;
+  padding:56px 24px 48px;
+}
+.header-inner{max-width:1180px;margin:auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:12px;font-weight:800;opacity:.7}
+h1{font-size:clamp(38px,6vw,68px);line-height:1.02;margin:10px 0 18px;letter-spacing:-.04em}
+.header-copy{max-width:720px;color:#d8e0e8;font-size:18px;margin:0}
+.header-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.pill{border:1px solid rgba(255,255,255,.2);padding:7px 12px;border-radius:999px;font-size:13px;color:#e8edf2}
+.layout{max-width:1180px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;padding:28px 24px 70px}
+.sidebar{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto}
+.sidebar-inner{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.sidebar h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 12px;color:var(--muted)}
+.search{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);outline:none}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(23,105,224,.12)}
+.nav-list{list-style:none;padding:0;margin:14px 0 0}
+.nav-list li{margin:2px 0}
+.nav-list a{display:block;padding:7px 9px;border-radius:8px;color:var(--text);font-size:14px}
+.nav-list a:hover,.nav-list a.active{background:#eaf2ff;color:var(--accent);text-decoration:none}
+.content{min-width:0}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.toolbar p{margin:0;color:var(--muted);font-size:14px}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.filter{
+  background:var(--surface);border:1px solid var(--line);border-radius:999px;
+  padding:7px 12px;font-size:13px;color:var(--text)
+}
+.filter.active{background:var(--text);color:#fff;border-color:var(--text)}
+.framework{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:30px;margin:0 0 24px;scroll-margin-top:92px;
+}
+.framework.hidden{display:none}
+.framework-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.framework h2{font-size:32px;line-height:1.1;margin:5px 0 8px;letter-spacing:-.025em}
+.framework .purpose{color:var(--muted);margin:0;max-width:760px}
+.tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:var(--surface-2);font-size:12px;font-weight:700;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:24px 0}
+.step{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafbfc}
+.step b{display:block;font-size:15px}
+.step span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.framework h3{font-size:18px;margin:26px 0 8px}
+.framework p{max-width:850px}
+.example{border-left:4px solid var(--accent);background:#f4f8ff;padding:15px 18px;border-radius:0 12px 12px 0;margin:14px 0}
+.example strong{display:block;margin-bottom:5px}
+.avoid{background:#fff7ed;border:1px solid #f1dfc8;padding:14px 17px;border-radius:12px}
+.tip{background:#f1f8f3;border:1px solid #d6e9dc;padding:14px 17px;border-radius:12px}
+.back{font-size:13px;font-weight:700}
+footer{max-width:1180px;margin:auto;padding:0 24px 50px;color:var(--muted);font-size:13px}
+.empty{display:none;text-align:center;background:var(--surface);border:1px dashed var(--line);padding:45px;border-radius:var(--radius);color:var(--muted)}
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr;padding:18px 16px 60px}
+  .sidebar{position:relative;top:auto;max-height:none}
+  .nav-list{columns:2}
+  .nav-list li{break-inside:avoid}
+  .framework{padding:23px}
+}
+@media(max-width:520px){
+  .site-header{padding:40px 18px}
+  .layout{padding:14px 12px 50px}
+  .nav-list{columns:1}
+  .framework h2{font-size:27px}
+  .framework-head{display:block}
+}
+@media print{
+  body{background:#fff}
+  .sidebar,.toolbar,.back{display:none!important}
+  .layout{display:block;padding:0}
+  .framework{box-shadow:none;break-inside:avoid;border:0;border-bottom:1px solid #ccc;border-radius:0}
+  .site-header{background:#fff;color:#000;padding:20px 0}
+  .header-copy,.pill{color:#333}
+}
+</style>
+</head>
+<body id="top">
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="eyebrow">Interactive communication handbook</div>
+    <h1>Communication Frameworks</h1>
+    <p class="header-copy">A practical field guide to frameworks for feedback, difficult conversations, storytelling, persuasion, strategy, sales, writing, and leadership.</p>
+    <div class="header-meta">
+      <span class="pill">17 frameworks</span>
+      <span class="pill">Searchable</span>
+      <span class="pill">Category filters</span>
+      <span class="pill">Print-friendly</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Framework navigation">
+    <div class="sidebar-inner">
+      <h2>Find a framework</h2>
+      <input class="search" id="search" type="search" placeholder="Search frameworks..." aria-label="Search frameworks">
+      <div class="filter-row" style="margin-top:12px">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="leadership">Leadership</button>
+        <button class="filter" data-filter="storytelling">Storytelling</button>
+        <button class="filter" data-filter="strategy">Strategy</button>
+        <button class="filter" data-filter="persuasion">Persuasion</button>
+      </div>
+      <ul class="nav-list" id="navList">
+        <li><a href="#dearman">DEARMAN</a></li>
+        <li><a href="#cta">CTA</a></li>
+        <li><a href="#sbi">SBI</a></li>
+        <li><a href="#car">CAR</a></li>
+        <li><a href="#star">STAR</a></li>
+        <li><a href="#aida">AIDA</a></li>
+        <li><a href="#teel">TEEL</a></li>
+        <li><a href="#spin">SPIN</a></li>
+        <li><a href="#desc">DESC</a></li>
+        <li><a href="#prep">PREP</a></li>
+        <li><a href="#swot">SWOT</a></li>
+        <li><a href="#sbar">SBAR</a></li>
+        <li><a href="#reflection">3-2-1</a></li>
+        <li><a href="#coin">COIN</a></li>
+        <li><a href="#scqa">SCQA</a></li>
+        <li><a href="#fab">FAB</a></li>
+        <li><a href="#pastor">PASTOR</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <div class="toolbar">
+      <p id="count">17 frameworks</p>
+      <button class="filter" id="clearSearch">Clear search</button>
+    </div>
+
+    <article class="framework" id="dearman" data-category="leadership communication feedback" data-title="DEARMAN">
+      <div class="framework-head"><div><span class="tag">Leadership · Conflict · DBT</span><h2>DEARMAN</h2><p class="purpose">A structured way to make a request, set a boundary, disagree, or advocate for yourself while staying clear, calm, and collaborative.</p></div></div>
+      <div class="steps">
+        <div class="step"><b>D — Describe</b><span>State observable facts.</span></div>
+        <div class="step"><b>E — Express</b><span>Share your feelings or concern.</span></div>
+        <div class="step"><b>A — Assert</b><span>Clearly ask for what you need.</span></div>
+        <div class="step"><b>R — Reinforce</b><span>Explain the benefit.</span></div>
+        <div class="step"><b>M — Mindful</b><span>Stay on the main point.</span></div>
+        <div class="step"><b>A — Appear confident</b><span>Use steady, direct delivery.</span></div>
+        <div class="step"><b>N — Negotiate</b><span>Look for workable alternatives.</span></div>
+      </div>
+      <h3>How to use it</h3>
+      <p>Start with what happened rather than your interpretation of someone's motives. Explain why it matters, make one clear request, and then resist getting pulled into side arguments. If the other person cannot meet the exact request, negotiate the underlying need.</p>
+      <div class="example"><strong>Design leadership example</strong>“The scope has changed three times since we started the sprint. I’m concerned that we’re trading away craft and creating rework. I’d like us to agree on the top priority before adding new requirements. That will help the team move faster and produce a stronger outcome.”</div>
+      <div class="avoid"><strong>Watch out:</strong> DEARMAN is not a script for winning. Avoid turning “Describe” into blame or “Assert” into an ultimatum.</div>
+      <h3>Best for</h3><p>Boundaries, stakeholder conflict, negotiation, difficult 1:1s, saying no, and advocating for your team.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="cta" data-category="persuasion writing communication" data-title="CTA">
+      <span class="tag">Persuasion · UX Writing · Conversion</span><h2>CTA — Call To Action</h2>
+      <p class="purpose">A CTA is the explicit next step you want the audience to take. It turns communication from information into movement.</p>
+      <h3>How to use it</h3><p>Make the action specific, easy to understand, and appropriately timed. A strong CTA answers: <em>What should happen next?</em> In product design, the CTA can be a button; in leadership, it can be a decision or commitment.</p>
+      <div class="example"><strong>Weak:</strong> “Let’s keep the conversation going.”<br><strong>Stronger:</strong> “Approve the research plan by Friday so we can recruit Monday.”</div>
+      <h3>Best for</h3><p>Presentations, emails, product flows, executive asks, campaign messaging, and meeting close-outs.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="sbi" data-category="leadership feedback communication" data-title="SBI">
+      <span class="tag">Feedback · Coaching · Leadership</span><h2>SBI — Situation, Behavior, Impact</h2>
+      <p class="purpose">A feedback model that keeps the conversation anchored in a specific event, observable behavior, and resulting impact rather than personality or intent.</p>
+      <div class="steps">
+        <div class="step"><b>Situation</b><span>When and where it happened.</span></div>
+        <div class="step"><b>Behavior</b><span>What you could actually observe.</span></div>
+        <div class="step"><b>Impact</b><span>What happened as a result.</span></div>
+      </div>
+      <h3>How to use it</h3><p>Describe the moment as if a camera recorded it. Avoid labels such as “careless,” “negative,” or “not strategic.” Then explain the effect on the work, team, customer, or relationship. SBI can be positive or corrective.</p>
+      <div class="example"><strong>Coaching example</strong>“In yesterday’s design critique (Situation), you interrupted two teammates while they were explaining their rationale (Behavior). It made it harder for the group to explore the ideas fully (Impact).”</div>
+      <div class="tip"><strong>Leadership tip:</strong> After SBI, add a forward-looking question: “What could you do differently next time?” This turns feedback into coaching.</div>
+      <h3>Best for</h3><p>Performance conversations, praise, coaching, design critique, collaboration issues, and behavior change.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="car" data-category="storytelling interviews" data-title="CAR">
+      <span class="tag">Storytelling · Interviews</span><h2>CAR — Challenge, Action, Result</h2>
+      <p class="purpose">A compact story structure that makes an accomplishment easy to understand without overloading the listener with background.</p>
+      <div class="steps"><div class="step"><b>Challenge</b><span>What problem or constraint existed?</span></div><div class="step"><b>Action</b><span>What did you personally do?</span></div><div class="step"><b>Result</b><span>What changed?</span></div></div>
+      <h3>How to use it</h3><p>Keep the Challenge brief, spend the most time on your decisions and actions, then land on measurable results. CAR is particularly useful when you have limited time and want the listener to remember your contribution.</p>
+      <div class="example"><strong>Example</strong>“Referral completion had plateaued (Challenge). I led a cross-functional redesign that simplified the flow and clarified the value proposition (Action). The new experience increased referral conversion and created a stronger foundation for global expansion (Result).”</div>
+      <h3>Best for</h3><p>Portfolio stories, interviews, executive updates, case studies, and self-promotion.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="star" data-category="storytelling interviews leadership" data-title="STAR">
+      <span class="tag">Interviews · Storytelling</span><h2>STAR — Situation, Task, Action, Result</h2>
+      <p class="purpose">A behavioral interview framework that gives a complete narrative while making your individual contribution explicit.</p>
+      <div class="steps"><div class="step"><b>Situation</b><span>Set the context.</span></div><div class="step"><b>Task</b><span>Clarify your responsibility or goal.</span></div><div class="step"><b>Action</b><span>Explain what you did.</span></div><div class="step"><b>Result</b><span>Show the outcome and learning.</span></div></div>
+      <h3>How to use it</h3><p>Don't spend 80% of your answer on context. The interviewer is usually evaluating your judgment, behavior, and impact, so emphasize Action and Result. Use “I” when describing your contribution even when the work was collaborative.</p>
+      <div class="example"><strong>Interview prompt: “Tell me about a time you influenced without authority.”</strong> Structure the answer around the situation, what you were responsible for, the specific influence tactics you used, and the measurable or observable result.</div>
+      <h3>Best for</h3><p>Behavioral interviews, promotion cases, leadership stories, and portfolio presentations.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="aida" data-category="persuasion marketing writing" data-title="AIDA">
+      <span class="tag">Persuasion · Marketing · Storytelling</span><h2>AIDA — Attention, Interest, Desire, Action</h2>
+      <p class="purpose">A persuasion sequence that moves an audience from noticing something to caring about it, wanting the outcome, and taking a next step.</p>
+      <div class="steps"><div class="step"><b>Attention</b><span>Give them a reason to notice.</span></div><div class="step"><b>Interest</b><span>Explain why it matters.</span></div><div class="step"><b>Desire</b><span>Make the benefit compelling.</span></div><div class="step"><b>Action</b><span>Make the next step clear.</span></div></div>
+      <h3>How to use it</h3><p>Lead with the problem or insight that earns attention. Build relevance with evidence or a story. Translate features into outcomes people want. Finish with a specific action.</p>
+      <div class="example"><strong>Product pitch</strong>“Referral growth has stalled. Research shows customers struggle to understand the value before they share. We can surface that value earlier and reduce friction in the flow. Let’s approve a 10% experiment next sprint.”</div>
+      <h3>Best for</h3><p>Presentations, product pitches, landing pages, campaigns, UX copy, and persuasive storytelling.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="teel" data-category="writing communication" data-title="TEEL">
+      <span class="tag">Writing · Essays · Reports</span><h2>TEEL — Topic, Explanation, Evidence, Link</h2>
+      <p class="purpose">A paragraph-level writing structure that makes an argument easy to follow and supports claims with evidence.</p>
+      <div class="steps"><div class="step"><b>Topic</b><span>State the main point.</span></div><div class="step"><b>Explanation</b><span>Clarify what you mean.</span></div><div class="step"><b>Evidence</b><span>Support it with proof.</span></div><div class="step"><b>Link</b><span>Connect back to the argument.</span></div></div>
+      <h3>How to use it</h3><p>Think of each paragraph as doing one job. Start with the point, explain its significance, provide evidence, and then connect it to the broader argument or next point.</p>
+      <div class="example"><strong>Design strategy example</strong>“Customers need clearer referral value. Interviews show uncertainty about the reward is a major hesitation. In five interviews, participants asked about the reward before sharing. This suggests value clarity should move earlier in the journey.”</div>
+      <h3>Best for</h3><p>Strategy documents, research readouts, essays, recommendations, and persuasive written arguments.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="spin" data-category="persuasion sales communication" data-title="SPIN">
+      <span class="tag">Sales · Discovery · Consulting</span><h2>SPIN — Situation, Problem, Implication, Need-Payoff</h2>
+      <p class="purpose">A consultative questioning framework designed to uncover the customer's real problem and connect it to the value of a solution.</p>
+      <div class="steps"><div class="step"><b>Situation</b><span>Understand the current state.</span></div><div class="step"><b>Problem</b><span>Identify pain or friction.</span></div><div class="step"><b>Implication</b><span>Explore why it matters.</span></div><div class="step"><b>Need-Payoff</b><span>Surface the value of change.</span></div></div>
+      <h3>How to use it</h3><p>Ask rather than tell. Move from facts to consequences, then let the other person articulate what improvement would be worth. In design, this can be adapted for stakeholder discovery.</p>
+      <div class="example"><strong>Stakeholder discovery</strong>“How are teams handling this today? Where does the process break down? What happens when that occurs? If we removed that friction, what would it enable?”</div>
+      <h3>Best for</h3><p>Discovery, stakeholder interviews, consulting, sales conversations, and problem framing.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="desc" data-category="leadership conflict communication" data-title="DESC">
+      <span class="tag">Conflict · Assertiveness · Boundaries</span><h2>DESC — Describe, Express, Specify, Consequences</h2>
+      <p class="purpose">An assertive communication structure for addressing conflict, stating a need, and making the consequences or benefits explicit.</p>
+      <div class="steps"><div class="step"><b>Describe</b><span>State the facts.</span></div><div class="step"><b>Express</b><span>State how you feel or why it matters.</span></div><div class="step"><b>Specify</b><span>Say what you want to change.</span></div><div class="step"><b>Consequences</b><span>Explain likely outcomes.</span></div></div>
+      <h3>How to use it</h3><p>DESC is especially useful when the behavior needs to change. It overlaps with DEARMAN but is more compact and often used as a direct conflict script.</p>
+      <div class="example"><strong>Example</strong>“When project decisions are changed after design sign-off, it creates rework. I’m concerned about quality and team capacity. I’d like us to document changes and revisit them at the next planning checkpoint. That will make trade-offs visible and protect delivery.”</div>
+      <h3>Best for</h3><p>Conflict resolution, boundaries, performance issues, and recurring collaboration problems.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="prep" data-category="storytelling communication persuasion" data-title="PREP">
+      <span class="tag">Executive Communication · Opinions</span><h2>PREP — Point, Reason, Example, Point</h2>
+      <p class="purpose">A concise structure for answering a question or making a recommendation without wandering.</p>
+      <div class="steps"><div class="step"><b>Point</b><span>Lead with your answer.</span></div><div class="step"><b>Reason</b><span>Explain why.</span></div><div class="step"><b>Example</b><span>Make it concrete.</span></div><div class="step"><b>Point</b><span>Land the takeaway.</span></div></div>
+      <h3>How to use it</h3><p>Put the conclusion first. This is particularly powerful with senior leaders who want the answer before the background. Use one strong example rather than a collection of weak ones.</p>
+      <div class="example"><strong>Question: “Should we invest in this?”</strong> “Yes, but only as a focused experiment (Point). The evidence suggests the opportunity is real, but uncertainty remains (Reason). Our last test increased engagement while exposing a retention issue (Example). So I recommend a limited pilot with a clear success threshold (Point).”</div>
+      <h3>Best for</h3><p>Executive communication, meetings, interviews, recommendations, and Q&A.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="swot" data-category="strategy leadership" data-title="SWOT">
+      <span class="tag">Strategy · Planning</span><h2>SWOT — Strengths, Weaknesses, Opportunities, Threats</h2>
+      <p class="purpose">A simple strategic lens for separating internal capabilities from external conditions.</p>
+      <div class="steps"><div class="step"><b>Strengths</b><span>Internal advantages.</span></div><div class="step"><b>Weaknesses</b><span>Internal limitations.</span></div><div class="step"><b>Opportunities</b><span>External openings.</span></div><div class="step"><b>Threats</b><span>External risks.</span></div></div>
+      <h3>How to use it</h3><p>Don't treat SWOT as the strategy itself. Use it to surface assumptions, then turn the findings into choices: what to exploit, improve, pursue, or protect against.</p>
+      <div class="example"><strong>Design team example</strong> Strength: deep customer knowledge. Weakness: fragmented research. Opportunity: a shared insight repository. Threat: duplicated agency work and competing priorities.</div>
+      <h3>Best for</h3><p>Team planning, product strategy, career planning, competitive analysis, and organizational discussions.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="sbar" data-category="leadership communication" data-title="SBAR">
+      <span class="tag">Handoffs · Executive Updates · Clarity</span><h2>SBAR — Situation, Background, Assessment, Recommendation</h2>
+      <p class="purpose">A concise structure for communicating a current situation, the relevant context, your assessment, and the action you recommend.</p>
+      <div class="steps"><div class="step"><b>Situation</b><span>What is happening now?</span></div><div class="step"><b>Background</b><span>What context matters?</span></div><div class="step"><b>Assessment</b><span>What do you believe is happening?</span></div><div class="step"><b>Recommendation</b><span>What should happen next?</span></div></div>
+      <h3>How to use it</h3><p>SBAR originated in healthcare handoffs but is useful anywhere decisions need to happen quickly. Keep Background selective: only include context that changes the decision.</p>
+      <div class="example"><strong>Executive update</strong> “The launch is at risk (Situation). Engineering lost two days to a dependency and research found a major usability issue (Background). I believe the current date creates unacceptable quality risk (Assessment). I recommend moving the launch one week and using the time for a targeted fix (Recommendation).”</div>
+      <h3>Best for</h3><p>Status updates, escalation, incident communication, handoffs, and decision-making.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="reflection" data-category="leadership learning" data-title="3-2-1">
+      <span class="tag">Reflection · Retrospectives · Learning</span><h2>3-2-1 Reflection</h2>
+      <p class="purpose">A lightweight reflection format commonly adapted as three takeaways, two interesting observations, and one question or next action.</p>
+      <div class="steps"><div class="step"><b>3</b><span>Key things learned.</span></div><div class="step"><b>2</b><span>Interesting observations.</span></div><div class="step"><b>1</b><span>Question, insight, or action.</span></div></div>
+      <h3>How to use it</h3><p>The exact meaning can vary by context, so define the three numbers before using it with a team. Its value is forcing synthesis rather than collecting a long list of notes.</p>
+      <div class="example"><strong>Project retro</strong> “3 things we learned: users need clearer value, stakeholders need earlier visibility, and our prototype testing was too late. 2 observations: the strongest concept was also the simplest; agency collaboration accelerated exploration. 1 action: establish an earlier prototype checkpoint.”</div>
+      <h3>Best for</h3><p>Retrospectives, workshops, learning sessions, research debriefs, and personal reflection.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="coin" data-category="leadership feedback coaching" data-title="COIN">
+      <span class="tag">Feedback · Coaching</span><h2>COIN — Context, Observation, Impact, Next Steps</h2>
+      <p class="purpose">A coaching-oriented feedback model that adds a future-facing next step to the classic observation-and-impact pattern.</p>
+      <div class="steps"><div class="step"><b>Context</b><span>Set the situation.</span></div><div class="step"><b>Observation</b><span>Describe what happened.</span></div><div class="step"><b>Impact</b><span>Explain the effect.</span></div><div class="step"><b>Next Steps</b><span>Agree on what to do differently.</span></div></div>
+      <h3>How to use it</h3><p>COIN is useful when you want the conversation to end with a behavioral commitment. It works particularly well in recurring coaching because the “Next Steps” can be revisited later.</p>
+      <div class="example"><strong>Manager example</strong> “In the last two project reviews (Context), I noticed you presented the solution before showing the research evidence (Observation). Senior partners challenged the recommendation before understanding the customer problem (Impact). Next time, lead with the evidence and invite questions before presenting the solution (Next Steps).”</div>
+      <h3>Best for</h3><p>Manager coaching, development plans, performance conversations, and reinforcing good habits.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="scqa" data-category="storytelling strategy leadership" data-title="SCQA">
+      <span class="tag">Executive Storytelling · Strategy</span><h2>SCQA — Situation, Complication, Question, Answer</h2>
+      <p class="purpose">A problem-framing structure often associated with consulting communication. It creates a narrative tension before delivering the recommendation.</p>
+      <div class="steps"><div class="step"><b>Situation</b><span>Establish the known context.</span></div><div class="step"><b>Complication</b><span>Introduce what changed or went wrong.</span></div><div class="step"><b>Question</b><span>Surface the decision that follows.</span></div><div class="step"><b>Answer</b><span>Deliver the recommendation.</span></div></div>
+      <h3>How to use it</h3><p>Keep the Situation familiar and concise. The Complication should create a genuine need for a decision. The Question can be explicit or implicit, but the Answer should be crisp and directly address it.</p>
+      <div class="example"><strong>Strategy example</strong> “Referral traffic continues to grow (Situation), but completion has plateaued as the journey becomes more complex across markets (Complication). How do we unlock the next phase of growth without adding operational complexity (Question)? Simplify the core journey first, then scale market-specific enhancements (Answer).”</div>
+      <h3>Best for</h3><p>Executive decks, strategy proposals, case studies, board-level communication, and problem statements.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="fab" data-category="persuasion sales marketing" data-title="FAB">
+      <span class="tag">Persuasion · Product · Sales</span><h2>FAB — Features, Advantages, Benefits</h2>
+      <p class="purpose">A messaging framework that translates what something is into why it is useful and, ultimately, why the audience should care.</p>
+      <div class="steps"><div class="step"><b>Feature</b><span>What it has or does.</span></div><div class="step"><b>Advantage</b><span>What the feature enables.</span></div><div class="step"><b>Benefit</b><span>Why that matters to the person.</span></div></div>
+      <h3>How to use it</h3><p>Move progressively from product language to human value. “Feature” is about capability; “Advantage” is about utility; “Benefit” connects that utility to an outcome the audience values.</p>
+      <div class="example"><strong>Product example</strong> “The dashboard shows referral performance by market (Feature). Leaders can compare performance without manually combining reports (Advantage). They can spot where to invest and act faster (Benefit).”</div>
+      <h3>Best for</h3><p>Product pitches, marketing, UX messaging, sales enablement, and explaining design decisions.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <article class="framework" id="pastor" data-category="persuasion writing marketing" data-title="PASTOR">
+      <span class="tag">Copywriting · Persuasion</span><h2>PASTOR — Problem, Amplify, Story/Solution, Transformation, Offer, Response</h2>
+      <p class="purpose">A long-form persuasion structure that builds empathy around a problem, presents a solution, shows the desired transformation, and asks for a response.</p>
+      <div class="steps">
+        <div class="step"><b>Problem</b><span>Name the pain.</span></div>
+        <div class="step"><b>Amplify</b><span>Show why it matters.</span></div>
+        <div class="step"><b>Story / Solution</b><span>Introduce the answer.</span></div>
+        <div class="step"><b>Transformation</b><span>Paint the better future.</span></div>
+        <div class="step"><b>Offer</b><span>Make the value concrete.</span></div>
+        <div class="step"><b>Response</b><span>Ask for action.</span></div>
+      </div>
+      <h3>How to use it</h3><p>PASTOR is most useful when the audience needs emotional context before they are ready to act. The “Amplify” step should create relevance, not fear-mongering. The “Transformation” step should make the outcome tangible.</p>
+      <div class="example"><strong>Example</strong> Start with the customer problem, demonstrate the cost of leaving it unresolved, introduce the solution through a credible story, show what improves, make the offer specific, and end with one clear response.</div>
+      <h3>Best for</h3><p>Long-form copy, campaigns, sales pages, fundraising, product narratives, and persuasive storytelling.</p>
+      <a class="back" href="#top">↑ Back to top</a>
+    </article>
+
+    <div class="empty" id="empty">No frameworks match your search. Try a different term or clear the filters.</div>
+  </main>
+</div>
+
+<footer>
+  <p><strong>Framework note:</strong> Acronyms often have multiple variants depending on the source or discipline. Use the version your organization or training program has defined when precision matters.</p>
+</footer>
+
+<script>
+const search = document.getElementById('search');
+const cards = [...document.querySelectorAll('.framework')];
+const navLinks = [...document.querySelectorAll('.nav-list a')];
+const filters = [...document.querySelectorAll('.filter[data-filter]')];
+const count = document.getElementById('count');
+const empty = document.getElementById('empty');
+const clear = document.getElementById('clearSearch');
+let activeFilter = 'all';
+
+function applyFilters(){
+  const q = search.value.trim().toLowerCase();
+  let visible = 0;
+  cards.forEach(card=>{
+    const hay = (card.dataset.title + ' ' + card.dataset.category + ' ' + card.innerText).toLowerCase();
+    const categoryOK = activeFilter === 'all' || card.dataset.category.includes(activeFilter);
+    const searchOK = !q || hay.includes(q);
+    const show = categoryOK && searchOK;
+    card.classList.toggle('hidden', !show);
+    if(show) visible++;
+  });
+  count.textContent = `${visible} framework${visible===1?'':'s'}`;
+  empty.style.display = visible ? 'none' : 'block';
+}
+search.addEventListener('input', applyFilters);
+clear.addEventListener('click', ()=>{
+  search.value=''; activeFilter='all';
+  filters.forEach(b=>b.classList.toggle('active', b.dataset.filter==='all'));
+  applyFilters();
+  search.focus();
+});
+filters.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    activeFilter = btn.dataset.filter;
+    filters.forEach(b=>b.classList.toggle('active', b===btn));
+    applyFilters();
+  });
+});
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === '#'+entry.target.id));
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px',threshold:0});
+cards.forEach(c=>observer.observe(c));
+</script>
+</body>
+</html>
