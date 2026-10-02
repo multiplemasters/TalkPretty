@@ -1,31 +1,39 @@
 # TalkPretty — Communication Framework Guide
 
-A mobile-first reference for choosing and using the right communication framework for conflict, feedback, interviews, persuasion, strategy, and everyday conversations.
+A field guide to 28 communication frameworks for conflict, feedback, interviews, persuasion, strategy, and everyday conversations. Find a framework, remember it with a cue, and take one useful next step.
 
-It runs entirely in the browser: the framework data is in `src/App.tsx`, and favorites and theme are saved in `localStorage`. There's no backend.
+Live site: https://multiplemasters.github.io/TalkPretty/
 
-## Develop
+It's a plain Jekyll site. Every page is static HTML and readable without JavaScript; a small script (`assets/js/site.js`) adds search, category filters, saved favorites, dark mode, and copy-to-clipboard.
 
-Requires Node 20.19+.
+## Structure
+
+| Path | What it is |
+| --- | --- |
+| `_frameworks/*.md` | One file per framework. All content lives in the front matter. |
+| `_layouts/default.html` | Page shell: header, theme init, footer. |
+| `_layouts/framework.html` | Framework detail page (steps, next move, example, prev/next). |
+| `_includes/card.html` | Framework card on the home page, including its search text. |
+| `index.html` | Home: hero, search, filters, framework grid. |
+| `assets/css/site.css` | All styles, with light and dark themes. |
+| `assets/js/site.js` | Progressive enhancement; state in `localStorage`. |
+| `communication_frameworks_handbook.html` | Earlier standalone handbook (17 frameworks). Not published by the build. |
+
+## Add or edit a framework
+
+Copy any file in `_frameworks/`, rename it (the filename becomes the URL: `/frameworks/<name>/`), and edit the front matter. `order` controls position on the home page and in prev/next. `topics` must use the category names listed in `index.html` to appear under a filter.
+
+## Run locally
+
+Requires Ruby and Bundler.
 
 ```sh
-npm install
-npm run dev        # http://localhost:5173
-npm test           # Vitest + Testing Library
-npm run typecheck
-npm run build      # outputs to dist/
+bundle install
+bundle exec jekyll serve      # http://localhost:4000/TalkPretty/
 ```
+
+The `Gemfile` uses the `github-pages` gem so local builds match GitHub's.
 
 ## Deploy
 
-`.github/workflows/deploy.yml` runs typecheck, tests, and build on every push and PR. It deploys `main` to GitHub Pages at https://multiplemasters.github.io/TalkPretty/.
-
-One-time setup: in the repo go to **Settings → Pages → Source** and pick **GitHub Actions**.
-
-## Other files
-
-`communication_frameworks_handbook.html` is the earlier standalone single-file handbook (17 frameworks). The build doesn't include it.
-
-## Stack
-
-React 19, Vite 7, Tailwind CSS 4, lucide-react, Vitest.
+`.github/workflows/jekyll-gh-pages.yml` builds the site with Jekyll and deploys it to GitHub Pages on every push to `main`. In the repo, **Settings → Pages → Source** must be set to **GitHub Actions**.

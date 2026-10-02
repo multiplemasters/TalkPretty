@@ -1,0 +1,97 @@
+---
+layout: default
+---
+{%- assign all = site.frameworks | sort: 'order' -%}
+{%- for f in all -%}
+  {%- if f.slug == page.slug -%}
+    {%- assign idx = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign prev_i = idx | minus: 1 -%}
+{%- assign next_i = idx | plus: 1 -%}
+{%- assign prev = all[prev_i] -%}
+{%- assign next = all[next_i] -%}
+{%- if idx == 0 -%}{%- assign prev = nil -%}{%- endif -%}
+
+{%- capture copy_text -%}
+{{ page.title }} — {{ page.full_name }}
+
+{% for s in page.steps %}{{ s.letter }}. {{ s.label }}: {{ s.description }}
+{% endfor %}
+Next move: {{ page.how_to_use }}
+{%- endcapture -%}
+
+<article class="wrap detail" style="--m: {{ page.mnemonic.color }}">
+  <a class="back" href="{{ '/' | relative_url }}#library"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg> All frameworks</a>
+
+  <header class="detail-head">
+    <span class="tile tile-lg" aria-hidden="true">{{ page.title | replace: '-', '' | replace: '–', '' | replace: ' ', '' | slice: 0, 4 }}</span>
+    <div>
+      <p class="card-topics">{{ page.topics | join: ' · ' | escape }}</p>
+      <h1 class="detail-title">{{ page.title }}</h1>
+      <p class="detail-name">{{ page.full_name }}</p>
+    </div>
+  </header>
+
+  <p class="lede">{{ page.tagline }}</p>
+  <p class="body">{{ page.description }}</p>
+
+  <div class="actions">
+    <button class="btn btn-primary js-only" type="button" id="copy-btn" data-copy="{{ copy_text | strip | escape }}">
+      <svg class="icon icon-copy" aria-hidden="true"><use href="#i-copy"/></svg>
+      <svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>
+      <span id="copy-label" aria-live="polite">Copy steps</span>
+    </button>
+    <button class="btn js-only" type="button" aria-pressed="false" data-save="{{ page.slug }}" data-title="{{ page.title }}" data-label="true">
+      <svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>
+      <span class="save-label">Save</span>
+    </button>
+  </div>
+
+  <section class="section" aria-labelledby="steps-h">
+    <h2 id="steps-h" class="section-title">The steps</h2>
+    <ol class="steps">
+      {%- for s in page.steps -%}
+      <li class="step">
+        <span class="step-letter" aria-hidden="true">{{ s.letter }}</span>
+        <div>
+          <p class="step-label">{{ s.label }}</p>
+          <p class="step-desc">{{ s.description }}</p>
+        </div>
+      </li>
+      {%- endfor -%}
+    </ol>
+  </section>
+
+  <div class="two-col">
+    <section class="section" aria-labelledby="next-h">
+      <h2 id="next-h" class="section-title">Next move</h2>
+      <p class="body">{{ page.how_to_use }}</p>
+    </section>
+    <section class="section" aria-labelledby="best-h">
+      <h2 id="best-h" class="section-title">Best for</h2>
+      <ul class="tags">
+        {%- for b in page.best_for -%}<li>{{ b }}</li>{%- endfor -%}
+      </ul>
+    </section>
+  </div>
+
+  <section class="section" aria-labelledby="ex-h">
+    <h2 id="ex-h" class="section-title">Example</h2>
+    <blockquote class="example">{{ page.example }}</blockquote>
+  </section>
+
+  <section class="section" aria-labelledby="cue-h">
+    <h2 id="cue-h" class="section-title">Memory cue</h2>
+    <p class="body"><strong class="mono cue-word">{{ page.mnemonic.word }}</strong> — {{ page.mnemonic.cue }}</p>
+  </section>
+
+  {%- if page.source_note -%}
+  <p class="note">{{ page.source_note }}</p>
+  {%- endif -%}
+
+  <nav class="pager" aria-label="More frameworks">
+    {%- if prev -%}<a class="pager-link" href="{{ prev.url | relative_url }}" rel="prev"><span class="pager-dir">Previous</span><span>{{ prev.title }}</span></a>{%- else -%}<span></span>{%- endif -%}
+    {%- if next -%}<a class="pager-link pager-next" href="{{ next.url | relative_url }}" rel="next"><span class="pager-dir">Next</span><span>{{ next.title }}</span></a>{%- endif -%}
+  </nav>
+</article>

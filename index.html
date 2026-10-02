@@ -1,21 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Communication Framework Guide</title>
-    <meta name="description" content="A mobile-first reference for choosing and using the right communication framework for conflict, feedback, interviews, persuasion, strategy, and everyday conversations." />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Communication Framework Guide" />
-    <meta property="og:description" content="A mobile-first reference for choosing and using the right communication framework for conflict, feedback, interviews, persuasion, strategy, and everyday conversations." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Communication Framework Guide" />
-    <meta name="twitter:description" content="A mobile-first reference for choosing and using the right communication framework for conflict, feedback, interviews, persuasion, strategy, and everyday conversations." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+---
+layout: default
+title: Communication Framework Guide
+---
+{%- assign all = site.frameworks | sort: 'order' -%}
+{%- assign topic_list = "Conflict resolution|Feedback & coaching|Job interviews|Executive updates|Storytelling|Strategy|Persuasion & sales|Writing|Reflection" | split: '|' -%}
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Find the shape of what you mean</p>
+    <h1 class="hero-title">The right words, <span class="hero-accent">when it matters.</span></h1>
+    <p class="hero-copy">A field guide to the structures behind clear conversations. Find a framework, remember it with a cue, and take one useful next step.</p>
+  </div>
+</section>
+
+<section class="dock" aria-label="Find a framework">
+  <div class="wrap">
+    <div class="dock-row">
+      <form class="search js-only" role="search" id="search-form" onsubmit="return false">
+        <label class="sr-only" for="search">Search frameworks</label>
+        <svg class="icon search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="search" type="search" autocomplete="off" placeholder="Search acronym or situation">
+        <button class="clear-btn" id="clear-search" type="button" aria-label="Clear search" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </form>
+      <button class="btn js-only" id="saved-only" type="button" aria-pressed="false">
+        <svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>
+        Saved only <span class="mono" id="saved-only-count">(0)</span>
+      </button>
+    </div>
+    <div class="chips js-only" role="group" aria-label="Filter by category">
+      <button class="chip" type="button" data-topic="All" aria-pressed="true">All <span class="mono" aria-hidden="true">({{ all.size }})</span></button>
+      {%- for t in topic_list -%}
+        {%- assign n = 0 -%}
+        {%- for f in all -%}{%- if f.topics contains t -%}{%- assign n = n | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        <button class="chip" type="button" data-topic="{{ t | escape }}" aria-pressed="false">{{ t }} <span class="mono" aria-hidden="true">({{ n }})</span></button>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="wrap library" id="library">
+  <div class="library-head">
+    <div>
+      <p class="kicker">Your working library</p>
+      <h2 class="count" id="result-count" aria-live="polite"><span id="count-n">{{ all.size }}</span> <span class="muted" id="count-label">frameworks</span></h2>
+    </div>
+    <button class="btn btn-quiet" id="clear-filters" type="button" hidden>Clear filters</button>
+  </div>
+
+  <ul class="grid" id="grid">
+    {%- for f in all -%}
+      {%- include card.html framework=f -%}
+    {%- endfor -%}
+  </ul>
+
+  <div class="empty" id="empty" hidden>
+    <h3>Nothing matches yet</h3>
+    <p>Try a shorter search, another category, or clear the filters.</p>
+  </div>
+</section>

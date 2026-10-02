@@ -1,0 +1,30 @@
+title: TalkPretty
+tagline: Communication Framework Guide
+description: A field guide to 28 communication frameworks for conflict, feedback, interviews, persuasion, strategy, and everyday conversations. Find a framework, remember it with a cue, and take one useful next step.
+lang: en
+
+# Set by actions/configure-pages on GitHub; override locally if needed.
+# url: https://multiplemasters.github.io
+# baseurl: /TalkPretty
+
+collections:
+  frameworks:
+    output: true
+    permalink: /frameworks/:name/
+
+defaults:
+  - scope: { path: "" }
+    values: { layout: default }
+
+# Build only what the site needs.
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - communication_frameworks_handbook.html
+
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag

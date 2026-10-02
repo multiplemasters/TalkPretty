@@ -1,0 +1,16 @@
+{%- assign f = include.framework -%}
+{%- capture haystack -%}
+{{ f.title }} {{ f.full_name }} {{ f.tagline }} {{ f.description }} {{ f.how_to_use }} {{ f.example }} {{ f.mnemonic.word }} {{ f.mnemonic.cue }} {{ f.topics | join: ' ' }} {{ f.best_for | join: ' ' }}{% for s in f.steps %} {{ s.label }} {{ s.description }}{% endfor %}
+{%- endcapture -%}
+<li class="card" data-slug="{{ f.slug }}" data-topics="{{ f.topics | join: '|' | escape }}" data-search="{{ haystack | strip_newlines | downcase | escape }}" style="--m: {{ f.mnemonic.color }}">
+  <div class="card-top">
+    <span class="tile" aria-hidden="true">{{ f.title | replace: '-', '' | replace: '–', '' | replace: ' ', '' | slice: 0, 4 }}</span>
+    <button class="save-btn js-only" type="button" aria-pressed="false" aria-label="Save {{ f.title }}" data-save="{{ f.slug }}" data-title="{{ f.title }}">
+      <svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>
+    </button>
+  </div>
+  <h3 class="card-title"><a class="card-link" href="{{ f.url | relative_url }}">{{ f.title }}</a></h3>
+  <p class="card-name">{{ f.full_name }}</p>
+  <p class="card-tagline">{{ f.tagline }}</p>
+  <p class="card-topics">{{ f.topics | join: ' · ' | escape }}</p>
+</li>
